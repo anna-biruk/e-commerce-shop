@@ -7,10 +7,14 @@ import {injectStyled, Styled} from "styled-jss";
 import IconButton from "../base/IconButton";
 import {ReactComponent as CartSvg} from "../../assets/cart.svg";
 import theme from "../../theme";
+import {withRouter} from "../../hocs/withRouter";
 
 
-class ProductItem extends PureComponent {
+class ProductListItem extends PureComponent {
     static propTypes = {
+        router: PropTypes.objectOf({
+            navigate: PropTypes.func
+        }),
         productItem: PropTypes.objectOf({
             name: PropTypes.string,
             prices: PropTypes.arrayOf(PropTypes.object),
@@ -25,20 +29,30 @@ class ProductItem extends PureComponent {
         })
     }
 
+    handleAddToCartClick = (event) => {
+        event.stopPropagation()
+        debugger
+        this.props.addToCart({attributes: this.props.attributes, product: this.props.productItem})
+    }
+    handleCardClick = () => {
+        this.props.router.navigate(`/${this.props.productItem.id}`)
+    }
+
     render() {
         const {productItem, classes} = this.props
         return (
-            <Card className={classes.card} variant="productCard">
+
+            <Card className={classes.card} variant="productCard" onClick={this.handleCardClick}>
                 {
                     !productItem.inStock && (<div className={classes.overlay}>OUT OF STOCK</div>)
                 }
                 <Image className={classes.img} src={productItem.gallery[0]}/>
-                <Typography variant="h3">{productItem.name}</Typography>
+                <Typography variant="h4">{productItem.name}</Typography>
                 <Typography className={classes.price}
-                            variant="h3">{productItem.currentPrice.currency.symbol}{productItem.currentPrice.amount}</Typography>
+                            variant="h4">{productItem.currentPrice.currency.symbol}{productItem.currentPrice.amount}</Typography>
                 {
                     productItem.inStock && (
-                        <IconButton className={classes.button}>
+                        <IconButton onClick={this.handleAddToCartClick} className={classes.button}>
                             <CartSvg/>
                         </IconButton>
                     )
@@ -55,6 +69,10 @@ const styled = Styled({
         width: "100%",
         objectFit: "cover",
         marginBottom: 24,
+    },
+    link: {
+        textDecoration: "none",
+        color: "unset"
     },
     card: {
         width: 386,
@@ -79,7 +97,6 @@ const styled = Styled({
         fontFamily: "Raleway",
         paddingTop: 152,
         paddingLeft: 82,
-
     },
     button: {
         display: "none",
@@ -92,14 +109,10 @@ const styled = Styled({
         right: 31,
         cursor: "pointer",
         backgroundColor: theme.palette.primary.main
-
-
     },
     price: {
         fontWeight: 500
     }
-
-
 })
 
-export default injectStyled(styled)(ProductItem)
+export default withRouter(injectStyled(styled)(ProductListItem))

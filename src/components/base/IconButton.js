@@ -1,7 +1,5 @@
 import styled from "styled-jss";
 
-const IconButton = styled('button')(({theme}) => ({
-    backgroundColor: theme.palette.primary.main,
-}))
+const IconButton = styled('button')({})
 
 export default IconButton

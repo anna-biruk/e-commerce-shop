@@ -5,8 +5,10 @@ import parse from "html-react-parser";
 import {injectStyled, Styled} from "styled-jss";
 import theme from "../../theme";
 import PropTypes from "prop-types";
+import ColorPicker from "../ColorPicker/ColorPicker";
+import AttributePicker from "../AttributePicker/AttributePicker";
 
-class AttributesList extends PureComponent {
+class InformationList extends PureComponent {
     static propTypes = {
         setAttributes: PropTypes.func
     }
@@ -18,7 +20,7 @@ class AttributesList extends PureComponent {
     }
 
     render() {
-        const {classes, selectedProduct} = this.props
+        const {classes, selectedProduct, attributes} = this.props
         return (
             <div className={classes.informationBlock}>
                 <Typography className={classes.title} variant="h3">{selectedProduct.name}</Typography>
@@ -31,23 +33,13 @@ class AttributesList extends PureComponent {
                                             className={classes.attributesName}>{attribute.name}:</Typography>
                                 <div className={classes.attributesItemsContainer}>
                                     {attribute.name === "Color" ? (
-                                        attribute.items.map((item) => {
-                                            return (
-                                                <div className={classes.attributeColor}
-                                                     style={{backgroundColor: `${item.value}`}}
-                                                     onClick={this.handleClick(item.value, attribute.name)}>
-                                                </div>
-                                            )
-                                        })
+                                        <ColorPicker attribute={attribute} handleClick={this.handleClick}
+                                                     activeItem={attributes[attribute.name]}/>
                                     ) : (
-                                        attribute.items.map((item) => {
-                                            return (
-                                                <div className={classes.attributeItem}
-                                                     onClick={this.handleClick(item.value, attribute.name)}>
-                                                    <Typography variant="h4">{item.value}</Typography>
-                                                </div>
-                                            )
-                                        })
+
+                                        <AttributePicker attribute={attribute} handleClick={this.handleClick}
+                                                         attributes={attributes}
+                                                         activeItem={attributes[attribute.name]}/>
                                     )}
 
                                 </div>
@@ -74,7 +66,6 @@ class AttributesList extends PureComponent {
 }
 
 const styled = Styled({
-
     informationBlock: {
         display: "flex",
         flexDirection: "column",
@@ -98,34 +89,18 @@ const styled = Styled({
         fontSize: 16,
         fontFamily: "Raleway",
         fontWeight: 600,
-        marginTop: 20
+        marginTop: 20,
+        cursor: "pointer",
     },
     attributesName: {
         fontWeight: 700,
         marginTop: 24
-
     },
     attributesItemsContainer: {
         display: "flex",
         flexDirection: "row",
     },
-    attributeColor: {
-        width: 32,
-        height: 32,
-        marginRight: 10
-    },
-
-    attributeItem: {
-        display: "flex",
-        width: 63,
-        height: 45,
-        border: '1px solid #1D1F22',
-        marginRight: 12,
-        alignItems: "center",
-        justifyContent: "center"
-
-    },
 
 })
 
-export default injectStyled(styled)(AttributesList)
+export default injectStyled(styled)(InformationList)

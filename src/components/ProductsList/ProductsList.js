@@ -1,23 +1,70 @@
-import {connect} from "react-redux";
 import {PureComponent} from "react";
+import PropTypes from "prop-types";
+import ProductListItem from "../ProductListItem/ProductListItem";
+import Typography from "../base/Typography";
+import {injectStyled, Styled} from "styled-jss";
+
 
 class ProductsList extends PureComponent {
+    state = {
+        id: 1,
+        name: 'Anna'
+    }
+
+    static propTypes = {
+        fetchData: PropTypes.func,
+        products: PropTypes.arrayOf(PropTypes.object)
+    }
+
+    componentDidMount() {
+        this.props.fetchData()
+    }
+
     render() {
+        const {products, classes, addToCart, selectedProduct, attributes} = this.props
         return (
-            <>
+            <div className={classes.container}>
                 {
-                    JSON.stringify(this.props)
+                    products.map((category) => {
+                        return (
+                            <div>
+                                <Typography variant="h2">
+                                    {category.name}
+                                </Typography>
+                                <div className={classes.productList}>
+                                    {category.products.map((productItem) => {
+                                        return <ProductListItem productItem={productItem} addToCart={addToCart}
+                                                                selectedProduct={selectedProduct}
+                                                                attributes={attributes}/>
+                                    })}
+                                </div>
+                            </div>)
+
+                    })
                 }
-            </>
+
+
+            </div>
         )
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        products: state.products.items,
+const styled = Styled({
+    container: {
+        maxWidth: "1238px",
+        margin: "0 auto",
+
+
+    },
+    productList: {
+        display: "flex",
+        rowGap: "103px",
+        flexDirection: "row",
+        gap: '40px',
+        flexWrap: "wrap",
+        justifyContent: "flex-start",
+        marginTop: 88
     }
-}
+})
 
-
-export default connect(mapStateToProps)(ProductsList);
+export default injectStyled(styled)(ProductsList)

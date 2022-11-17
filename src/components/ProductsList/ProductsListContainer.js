@@ -1,23 +1,25 @@
 import {connect} from "react-redux";
-import {PureComponent} from "react";
+import ProductsList from "./ProductsList";
+import {
+    fetchData,
+    selectCurrentAttributes,
+    selectProductById,
+    selectProducts
+} from "../../features/products/productsSlice";
+import {addToCart} from "../../features/cart/cartSlice";
 
-class ProductsList extends PureComponent {
-    render() {
-        return (
-            <>
-                {
-                    JSON.stringify(this.props)
-                }
-            </>
-        )
-    }
-}
 
 const mapStateToProps = (state) => {
     return {
-        products: state.products.items,
+        products: selectProducts(state),
+        selectedProduct: selectProductById(state),
+        attributes: selectCurrentAttributes(state)
     }
 }
 
+const mapDispatchToProps = {
+    fetchData,
+    addToCart
+}
 
-export default connect(mapStateToProps)(ProductsList);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);

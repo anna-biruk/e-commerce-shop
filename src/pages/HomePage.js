@@ -2,7 +2,7 @@ import React, {PureComponent} from "react";
 import HeaderContainer from "../components/Header/HeaderContainer";
 import ProductsListContainer from "../components/ProductsList/ProductsListContainer";
 
-class MainPage extends PureComponent {
+class HomePage extends PureComponent {
     render() {
         return (
             <>
@@ -13,4 +13,4 @@ class MainPage extends PureComponent {
     }
 }
 
-export default MainPage
+export default HomePage
