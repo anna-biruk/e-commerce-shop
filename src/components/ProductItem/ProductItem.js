@@ -10,17 +10,29 @@ class ProductItem extends PureComponent {
     static propTypes = {
         getProductById: PropTypes.func,
         productId: PropTypes.string,
-        isProductLoading: PropTypes.bool
+        isProductLoading: PropTypes.bool,
+        setCurrentImageIndex: PropTypes.func,
+        selectedProduct: PropTypes.object,
     }
 
     componentDidMount() {
         this.props.getProductById(this.props.productId)
-
     }
 
+    handleActiveImageClick = (index) => () => {
+        this.props.setCurrentImageIndex({index})
+    }
 
     render() {
-        const {selectedProduct, classes, isProductLoading, attributes, setAttributes, addToCart} = this.props;
+        const {
+            selectedProduct,
+            classes,
+            isProductLoading,
+            attributes,
+            setAttributes,
+            addToCart,
+            currentImageIndex
+        } = this.props;
         return (
             (isProductLoading || !selectedProduct) ? <Typography variant="h3">Loading</Typography> : (
                 <>
@@ -28,10 +40,11 @@ class ProductItem extends PureComponent {
                         <div className={classes.imagesList}>
                             {selectedProduct?.gallery?.map((image, index) => {
                                 return <Image
-                                    className={classes.selectImage} src={image}/>
+                                    className={classes.selectImage} src={image}
+                                    onClick={this.handleActiveImageClick(index)}/>
                             })}
                         </div>
-                        <Image className={classes.image} src={selectedProduct.gallery[0]}/>
+                        <Image className={classes.image} src={selectedProduct.gallery[currentImageIndex]}/>
                         <InformationList attributes={attributes} setAttributes={setAttributes}
                                          selectedProduct={selectedProduct} addToCart={addToCart}/>
                     </div>

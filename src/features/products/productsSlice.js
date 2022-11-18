@@ -8,7 +8,7 @@ const initialState = {
     isLoading: false,
     selectedProduct: null,
     attributes: {},
-    currentActiveImage: null
+    currentImageIndex: 0
 };
 
 
@@ -19,6 +19,9 @@ const productsSlice = createSlice({
         setAttributes: (state, action) => {
             state.attributes[action.payload.name] = action.payload.value;
         },
+        setCurrentImageIndex: (state, action) => {
+            state.currentImageIndex = action.payload.index
+        }
 
 
     },
@@ -40,6 +43,7 @@ const productsSlice = createSlice({
             .addCase(getProductById.fulfilled, (state, action) => {
                 state.attributes = {}
                 state.selectedProduct = action.payload;
+                state.currentImageIndex = 0
                 state.isLoading = false
             })
             .addCase(getProductById.rejected, (state, action) => {
@@ -88,7 +92,9 @@ export const selectProductById = state => {
 export const selectCurrentAttributes = state => state.products.attributes;
 export const selectIsProductLoading = state => state.products.isLoading;
 
-export const {setAttributes} = productsSlice.actions
+export const selectCurrentImageIndex = state => state.products.currentImageIndex
+
+export const {setAttributes, setCurrentImageIndex} = productsSlice.actions
 
 
 export default productsSlice.reducer;

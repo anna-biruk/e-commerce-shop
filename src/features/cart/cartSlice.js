@@ -9,7 +9,6 @@ const cartSlice = createSlice({
     reducers: {
         addToCart: (state, action) => {
             const {product, attributes} = action.payload;
-            debugger
             const itemInCart = state.items.find((item) => item.product.id === product.id);
             if (itemInCart) {
                 itemInCart.quantity++;
