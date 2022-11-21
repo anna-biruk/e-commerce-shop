@@ -4,13 +4,14 @@ import {injectStyled, Styled} from "styled-jss";
 
 class ColorPicker extends PureComponent {
     render() {
-        const {attribute, classes, activeItem, handleClick} = this.props
+        const {attribute, classes, activeItem, handleClick, small} = this.props
         return (
             attribute.items.map((item) => {
                 return (
                     <div
                         className={clsx(classes.attributeColor,
-                            {[classes.activeButtonColor]: item.value === activeItem})}
+                            {[classes.activeButtonColor]: item.value === activeItem},
+                            {[classes.smallAttribute]: small})}
                         style={{backgroundColor: `${item.value}`}}
                         onClick={handleClick(item.value, attribute.name)}>
                     </div>
@@ -29,19 +30,11 @@ const styled = Styled({
         boxSizing: "border-box",
         cursor: "pointer"
     },
-
-    attributeItem: {
-        display: "flex",
-        width: 63,
-        height: 45,
-        border: '1px solid #1D1F22',
-        marginRight: 12,
-        alignItems: "center",
-        justifyContent: "center",
-        cursor: "pointer"
-
+    smallAttribute: {
+        width: 24,
+        height: 24,
+        fontSize: 14,
     },
-
     activeButtonColor: {
         border: "2px solid #5ECE7B"
     },

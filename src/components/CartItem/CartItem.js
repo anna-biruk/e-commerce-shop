@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import IconButton from "../base/IconButton";
 import {ReactComponent as CaretLeft} from "../../assets/caretLeft.svg";
 import {ReactComponent as CaretRight} from "../../assets/caretRight.svg";
+import clsx from "clsx";
 
 class CartItem extends PureComponent {
     state = {
@@ -26,7 +27,8 @@ class CartItem extends PureComponent {
     }
     static propTypes = {
         incrementQuantity: PropTypes.func,
-        decrementQuantity: PropTypes.func
+        decrementQuantity: PropTypes.func,
+        overlay: PropTypes.bool,
     }
 
     handleClick = () => () => {
@@ -39,29 +41,36 @@ class CartItem extends PureComponent {
     }
 
     render() {
-        const {cartItem, classes} = this.props
+        const {cartItem, classes, overlay} = this.props
 
         return (
-            <div className={classes.container}>
-                <div className={classes.informationBlock}>
-                    <Typography variant="h3" className={classes.title}>{cartItem.product.name}</Typography>
-                    <Typography variant="h4" className={classes.brand}>{cartItem.product.brand}</Typography>
-                    <Typography variant="price" className={classes.price}>
+            <div className={clsx(classes.container, {[classes.overlayContainer]: overlay})}>
+                <div className={clsx(classes.informationBlock, {[classes.overlayInformationBlock]: overlay})}>
+                    <Typography variant="h3" className={clsx(classes.title,
+                        {[classes.overlayTitle]: overlay})}>
+                        {cartItem.product.name}
+                    </Typography>
+                    <Typography variant="h4" className={clsx(classes.brand,
+                        {[classes.overlayBrand]: overlay})}>{cartItem.product.brand}</Typography>
+                    <Typography variant="price" className={clsx(classes.price,
+                        {[classes.overlayPrice]: overlay})}>
                         {cartItem.product.currentPrice.currency.symbol}{cartItem.product.currentPrice.amount}
                     </Typography>
                     {cartItem.product.attributes.map((attribute) => {
                         return (
                             <div>
                                 <Typography variant="h4"
-                                            className={classes.attributesName}>{attribute.name}:</Typography>
+                                            className={clsx(classes.attributesName, {[classes.overlayAttributesName]: overlay})}>{attribute.name}:</Typography>
                                 <div className={classes.attributesValues}>
                                     {attribute.name === "Color" ? (
                                         <ColorPicker attribute={attribute}
+                                                     small={overlay}
                                                      handleClick={this.handleClick()}
                                                      activeItem={cartItem.attributes[attribute.name]}/>
                                     ) : (
 
                                         <AttributePicker attribute={attribute} handleClick={this.handleClick}
+                                                         small={overlay}
                                                          activeItem={cartItem.attributes[attribute.name]}/>
                                     )}
 
@@ -72,17 +81,19 @@ class CartItem extends PureComponent {
                         )
                     })}
                 </div>
-                <div className={classes.imageBlock}>
-                    <div className={classes.quantityContainer}>
-                        <div className={classes.quantityBlock}
+                <div className={clsx(classes.imageBlock, {[classes.overlayImageBlock]: overlay})}>
+                    <div className={clsx(classes.quantityContainer, {[classes.overlayQuantityContainer]: overlay})}>
+                        <div className={clsx(classes.quantityBlock, {[classes.overlayQuantityBlock]: overlay})}
                              onClick={this.handleIncreaseQuantity(cartItem.product.id)}>+
                         </div>
-                        <div className={classes.quantityValue}>{cartItem.quantity}</div>
-                        <div className={classes.quantityBlock}
+                        <div
+                            className={clsx(classes.quantityValue, {[classes.overlayQuantityValue]: overlay})}>{cartItem.quantity}</div>
+                        <div className={clsx(classes.quantityBlock, {[classes.overlayQuantityBlock]: overlay})}
                              onClick={this.handleDecreaseQuantity(cartItem.product.id)}>-
                         </div>
                     </div>
-                    <Image className={classes.img} src={cartItem.product.gallery[this.state.currentImageIndex]}/>
+                    <Image className={clsx(classes.img, {[classes.overlayImage]: overlay})}
+                           src={cartItem.product.gallery[this.state.currentImageIndex]}/>
                     <div className={classes.sliderButtonsContainer}>
                         <IconButton className={classes.sliderButton} onClick={this.goToPrevious}><CaretLeft/>
                         </IconButton>
@@ -103,18 +114,37 @@ const styled = Styled({
         justifyContent: "space-between",
         borderTop: "1px solid #E5E5E5",
     },
+    overlayContainer: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        border: "none"
+    },
     title: {
         fontWeight: 600
+    },
+    overlayTitle: {
+        fontWeight: 300,
+        fontSize: 16,
     },
     brand: {
         fontWeight: 400,
         lineHeight: "27px",
         marginTop: 16
     },
+    overlayBrand: {
+        fontWeight: 300,
+        fontSize: 16,
+    },
+
     price: {
         fontWeight: 700,
         lineHeight: "24px",
         marginTop: 20
+    },
+    overlayPrice: {
+        fontWeight: 500,
+        fontSize: 16
     },
     imageBlock: {
         display: "flex",
@@ -123,13 +153,23 @@ const styled = Styled({
         marginBottom: 24,
         position: "relative"
     },
+    overlayImageBlock: {
+        marginTop: 32,
+        marginBottom: 40,
+    },
     informationBlock: {
         marginTop: 24,
         marginBottom: 24
     },
+
     img: {
         width: 200,
         height: 288,
+        objectFit: "cover",
+    },
+    overlayImage: {
+        width: 121,
+        height: 190,
         objectFit: "cover",
     },
     attributesValues: {
@@ -140,12 +180,23 @@ const styled = Styled({
         fontWeight: 700,
         marginTop: 24
     },
+    overlayAttributesName: {
+        fontSize: 14,
+        fontWeight: 400,
+    },
     quantityContainer: {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
         height: 288,
         marginRight: 24
+    },
+    overlayQuantityContainer: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: 190,
+        marginRight: 8
     },
     quantityBlock: {
         width: 45,
@@ -156,11 +207,31 @@ const styled = Styled({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        fontWeight: 100
+        fontWeight: 100,
+        cursor:"pointer",
 
+
+    },
+    overlayQuantityBlock: {
+        width: 24,
+        height: 24,
+        border: "1px solid #1D1F22",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontSize: 29,
+        fontWeight: 300,
+        cursor:"pointer",
     },
     quantityValue: {
         fontSize: 24,
+        fontWeight: 500,
+        alignItems: "center",
+        display: "flex",
+        justifyContent: "center"
+    },
+    overlayQuantityValue: {
+        fontSize: 16,
         fontWeight: 500,
         alignItems: "center",
         display: "flex",
@@ -172,7 +243,8 @@ const styled = Styled({
         right: 16,
         display: "flex",
         flexDirection: "row",
-        gap: "8px"
+        gap: "8px",
+        cursor:"pointer",
     },
     sliderButton: {
         display: "flex",
@@ -182,6 +254,7 @@ const styled = Styled({
         width: 24,
         height: 24,
         background: "rgba(0, 0, 0, 0.73)",
+        cursor:"pointer",
 
     }
 

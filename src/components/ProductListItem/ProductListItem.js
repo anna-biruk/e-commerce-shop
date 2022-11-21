@@ -31,7 +31,6 @@ class ProductListItem extends PureComponent {
 
     handleAddToCartClick = (event) => {
         event.stopPropagation()
-        debugger
         this.props.addToCart({attributes: this.props.attributes, product: this.props.productItem})
     }
     handleCardClick = () => {

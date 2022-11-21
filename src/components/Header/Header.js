@@ -7,6 +7,7 @@ import theme from "../../theme";
 import {ReactComponent as CartButton} from "../../assets/cartButton.svg";
 import clsx from 'clsx';
 import {Link} from "react-router-dom";
+import ModalContainer from "../Modal/ModalContainer";
 
 
 class Header extends PureComponent {
@@ -17,6 +18,19 @@ class Header extends PureComponent {
         setCurrentCurrency: PropTypes.func,
         currentCurrencySymbol: PropTypes.string
     }
+    state = {
+        show: false
+    }
+
+    showModal = (e) => {
+        e.stopPropagation()
+        this.setState({show: true});
+    };
+
+    hideModal = (e) => {
+        e.stopPropagation()
+        this.setState({show: false});
+    };
 
     componentDidMount() {
         this.props.fetchCategories()
@@ -55,13 +69,11 @@ class Header extends PureComponent {
                                                className={classes.selectOption}>{item.symbol} {item.label}</option>
                             })}
                         </select>
-                        <Link to="/cart">
-                            <IconButton className={classes.cartButton}>
-                                <CartButton/>
-                                <div className={classes.label}>{totalQuantity}</div>
-                            </IconButton>
-
-                        </Link>
+                        <IconButton className={classes.cartButton} onClick={this.showModal}>
+                            <CartButton/>
+                            <div className={classes.label}>{totalQuantity}</div>
+                        </IconButton>
+                        <ModalContainer show={this.state.show} handleClose={this.hideModal}/>
 
                     </div>
 
@@ -77,7 +89,8 @@ const styled = Styled({
     container: {
         maxWidth: "1238px",
         margin: "0 auto",
-        marginBottom: 80
+        marginBottom: 80,
+        position: "relative"
     },
     list: {
         height: 80,
@@ -147,7 +160,8 @@ const styled = Styled({
         left: 17,
         display: "block",
         margin: "0 auto"
-    }
+    },
+
 
 })
 

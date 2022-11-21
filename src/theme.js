@@ -10,17 +10,17 @@ const theme = {
     },
     typography: {
         h2: {
-            fontSize: "42px",
+            fontSize: 42,
             fontWeight: 400,
             fontFamily: "Raleway",
         },
         h3: {
-            fontSize: "30px",
+            fontSize: 30,
             fontFamily: "Raleway",
 
         },
         h4: {
-            fontSize: "18px",
+            fontSize: 18,
             fontFamily: "Raleway",
         },
         cart: {
