@@ -11,6 +11,8 @@ const currenciesSlice = createSlice({
     initialState,
     reducers: {
         setCurrentCurrency: (state, action) => {
+            debugger
+
             state.currentCurrencySymbol = action.payload
         }
     },

@@ -8,6 +8,7 @@ import {ReactComponent as CartButton} from "../../assets/cartButton.svg";
 import clsx from 'clsx';
 import {Link} from "react-router-dom";
 import ModalContainer from "../Modal/ModalContainer";
+import DropdownComponentContainer from "../DropdownComponent/DropdownComponentContainer";
 
 
 class Header extends PureComponent {
@@ -40,12 +41,10 @@ class Header extends PureComponent {
     handleClick = (category) => () => {
         this.props.setActiveCategory(category.name)
     };
-    handleCurrencyChange = (event) => {
-        this.props.setCurrentCurrency(event.target.value)
-    }
+
 
     render() {
-        const {categories, classes, activeCategory, currencies, currentCurrencySymbol, totalQuantity} = this.props
+        const {categories, classes, activeCategory, totalQuantity} = this.props
         return (
             <div className={classes.container}>
                 <div className={classes.list}>
@@ -59,21 +58,21 @@ class Header extends PureComponent {
                     </div>
                     <Link to="/">
                         <IconButton className={classes.logoButton}><Logo/></IconButton>
-
                     </Link>
-                    <div>
-                        <select value={currentCurrencySymbol} className={classes.select}
-                                onChange={this.handleCurrencyChange}>
-                            {currencies.map((item) => {
-                                return <option value={item.symbol}
-                                               className={classes.selectOption}>{item.symbol} {item.label}</option>
-                            })}
-                        </select>
-                        <IconButton className={classes.cartButton} onClick={this.showModal}>
-                            <CartButton/>
-                            <div className={classes.label}>{totalQuantity}</div>
-                        </IconButton>
-                        <ModalContainer show={this.state.show} handleClose={this.hideModal}/>
+
+                    <div className={classes.buttonsContainer}>
+
+                        <DropdownComponentContainer />
+
+                        <div>
+                            <IconButton className={classes.cartButton} onClick={this.showModal}>
+                                <CartButton/>
+                                <div className={classes.label}>{totalQuantity}</div>
+                            </IconButton>
+                            <ModalContainer show={this.state.show} handleClose={this.hideModal}/>
+
+                        </div>
+
 
                     </div>
 
@@ -99,13 +98,7 @@ const styled = Styled({
         alignItems: "center"
 
     },
-    select: {
-        border: "none",
-        fontSize: 18,
-        fontFamily: "Raleway",
-        fontWeight: 500,
-        cursor: "pointer"
-    },
+
     selectOption: {
         border: "none",
     },
@@ -147,7 +140,6 @@ const styled = Styled({
     },
     label: {
         position: "absolute",
-
         width: 20,
         height: 20,
         borderRadius: 60,
@@ -161,6 +153,10 @@ const styled = Styled({
         display: "block",
         margin: "0 auto"
     },
+    buttonsContainer:{
+        display:"flex",
+        gap:"20px"
+    }
 
 
 })
