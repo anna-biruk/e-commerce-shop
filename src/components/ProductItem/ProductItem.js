@@ -61,6 +61,7 @@ const styled = Styled({
         flexDirection: "row",
         maxWidth: "1238px",
         margin: "0 auto",
+        marginBottom: 260
     },
     selectImage: {
         width: 80,

@@ -46,7 +46,7 @@ class ProductListItem extends PureComponent {
                     !productItem.inStock && (<div className={classes.overlay}>OUT OF STOCK</div>)
                 }
                 <Image className={classes.img} src={productItem.gallery[0]}/>
-                <Typography variant="h4">{productItem.name}</Typography>
+                <Typography variant="h4" className={classes.title}>{productItem.name}</Typography>
                 <Typography className={classes.price}
                             variant="h4">{productItem.currentPrice.currency.symbol}{productItem.currentPrice.amount}</Typography>
                 {
@@ -63,6 +63,11 @@ class ProductListItem extends PureComponent {
 }
 
 const styled = Styled({
+    title: {
+        fontWeight: 300
+
+    },
+
     img: {
         height: 330,
         width: "100%",

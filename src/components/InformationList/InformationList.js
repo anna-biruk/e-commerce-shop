@@ -1,4 +1,4 @@
-import {PureComponent} from "react";
+import {Fragment, PureComponent} from "react";
 import Typography from "../base/Typography";
 import IconButton from "../base/IconButton";
 import parse from "html-react-parser";
@@ -24,11 +24,11 @@ class InformationList extends PureComponent {
         return (
             <div className={classes.informationBlock}>
                 <Typography className={classes.title} variant="h3">{selectedProduct.name}</Typography>
-                <Typography variant='h4'>{selectedProduct.brand}</Typography>
+                <Typography variant="h4">{selectedProduct.brand}</Typography>
                 <div>
                     {selectedProduct?.attributes?.map((attribute) => {
                         return (
-                            <>
+                            <Fragment key={attribute.name}>
                                 <Typography variant="h4"
                                             className={classes.attributesName}>{attribute.name}:</Typography>
                                 <div className={classes.attributesItemsContainer}>
@@ -43,7 +43,7 @@ class InformationList extends PureComponent {
                                     )}
 
                                 </div>
-                            </>
+                            </Fragment>
                         )
                     })}
                     <div>

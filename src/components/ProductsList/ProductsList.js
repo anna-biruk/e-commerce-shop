@@ -53,6 +53,7 @@ const styled = Styled({
     container: {
         maxWidth: "1238px",
         margin: "0 auto",
+        marginBottom: 190
 
 
     },
