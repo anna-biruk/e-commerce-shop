@@ -135,6 +135,7 @@ const styled = Styled({
     overlayBrand: {
         fontWeight: 300,
         fontSize: 16,
+        marginTop: 4
     },
 
     price: {
@@ -144,7 +145,8 @@ const styled = Styled({
     },
     overlayPrice: {
         fontWeight: 500,
-        fontSize: 16
+        fontSize: 16,
+        marginTop: 4
     },
     imageBlock: {
         display: "flex",
@@ -183,6 +185,7 @@ const styled = Styled({
     overlayAttributesName: {
         fontSize: 14,
         fontWeight: 400,
+        marginTop: 8
     },
     quantityContainer: {
         display: "flex",
@@ -208,7 +211,7 @@ const styled = Styled({
         justifyContent: "center",
         alignItems: "center",
         fontWeight: 100,
-        cursor:"pointer",
+        cursor: "pointer",
 
 
     },
@@ -221,7 +224,7 @@ const styled = Styled({
         alignItems: "center",
         fontSize: 29,
         fontWeight: 300,
-        cursor:"pointer",
+        cursor: "pointer",
     },
     quantityValue: {
         fontSize: 24,
@@ -244,7 +247,7 @@ const styled = Styled({
         display: "flex",
         flexDirection: "row",
         gap: "8px",
-        cursor:"pointer",
+        cursor: "pointer",
     },
     sliderButton: {
         display: "flex",
@@ -254,7 +257,7 @@ const styled = Styled({
         width: 24,
         height: 24,
         background: "rgba(0, 0, 0, 0.73)",
-        cursor:"pointer",
+        cursor: "pointer",
 
     }
 

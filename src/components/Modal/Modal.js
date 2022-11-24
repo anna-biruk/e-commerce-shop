@@ -55,6 +55,8 @@ const styled = Styled({
         zIndex: 30,
         paddingRight: 18,
         paddingLeft: 18,
+        maxHeight: "calc(100vh - 100px)",
+        overflowY: "auto"
 
     },
     modalBackDrop: {
@@ -113,7 +115,7 @@ const styled = Styled({
         fontSize: 14,
         fontWeight: 400,
         boxSizing: "border-box",
-        cursor:"pointer",
+        cursor: "pointer",
     },
     checkOutButton: {
         width: 140,
@@ -127,7 +129,7 @@ const styled = Styled({
         backgroundColor: theme.palette.primary.main,
         border: "none",
         color: "white",
-        cursor:"pointer",
+        cursor: "pointer",
 
     },
 
