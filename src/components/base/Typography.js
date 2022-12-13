@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
-import {PureComponent} from "react";
-import {injectStyled, Styled} from "styled-jss";
+import { PureComponent } from "react";
+import { injectStyled, Styled } from "styled-jss";
 import clsx from "clsx";
 
 class Typography extends PureComponent {
 
     render() {
-        const {variant, children, classes, className} = this.props
-        console.log(classes[variant])
+        const { variant, children, classes, className } = this.props
+
         return (
             <div className={clsx(classes[variant], className)}>
                 {children}

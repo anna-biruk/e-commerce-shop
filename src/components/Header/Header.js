@@ -1,12 +1,12 @@
-import {PureComponent} from "react";
+import { PureComponent } from "react";
 import IconButton from "../base/IconButton";
-import {injectStyled, Styled} from "styled-jss";
-import {ReactComponent as Logo} from "../../assets/logo.svg";
+import { injectStyled, Styled } from "styled-jss";
+import { ReactComponent as Logo } from "../../assets/logo.svg";
 import PropTypes from "prop-types";
 import theme from "../../theme";
-import {ReactComponent as CartButton} from "../../assets/cartButton.svg";
+import { ReactComponent as CartButton } from "../../assets/cartButton.svg";
 import clsx from 'clsx';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import ModalContainer from "../Modal/ModalContainer";
 import DropdownComponentContainer from "../DropdownComponent/DropdownComponentContainer";
 
@@ -20,17 +20,30 @@ class Header extends PureComponent {
         currentCurrencySymbol: PropTypes.string
     }
     state = {
-        show: false
+        show: false,
     }
 
-    showModal = (e) => {
+    showHideModal = (e) => {
         e.stopPropagation()
-        this.setState({show: true});
+        this.setState({ show: !this.state.show }, () => {
+            if (this.state.show) {
+                document.body.style.overflowY = "hidden"
+            } else {
+                document.body.style.overflowY = "auto"
+            }
+        });
+
     };
 
     hideModal = (e) => {
         e.stopPropagation()
-        this.setState({show: false});
+        this.setState({ show: false }, () => {
+            if (this.state.show) {
+                document.body.style.overflowY = "hidden"
+            } else {
+                document.body.style.overflowY = "auto"
+            }
+        });
     };
 
     componentDidMount() {
@@ -44,20 +57,20 @@ class Header extends PureComponent {
 
 
     render() {
-        const {categories, classes, activeCategory, totalQuantity} = this.props
+        const { categories, classes, activeCategory, totalQuantity } = this.props
         return (
             <div className={classes.container}>
                 <div className={classes.list}>
                     <div>
                         {categories.map((category) => {
                             return <IconButton onClick={this.handleClick(category)}
-                                               className={clsx(classes.button, {[classes.active]: activeCategory === category.name})}>
+                                className={clsx(classes.button, { [classes.active]: activeCategory === category.name })}>
                                 {category.name.toUpperCase()}
                             </IconButton>
                         })}
                     </div>
                     <Link to="/">
-                        <IconButton className={classes.logoButton}><Logo/></IconButton>
+                        <IconButton className={classes.logoButton}><Logo /></IconButton>
                     </Link>
 
                     <div className={classes.buttonsContainer}>
@@ -65,11 +78,11 @@ class Header extends PureComponent {
                         <DropdownComponentContainer />
 
                         <div>
-                            <IconButton className={classes.cartButton} onClick={this.showModal}>
-                                <CartButton/>
+                            <IconButton className={classes.cartButton} onClick={this.showHideModal}>
+                                <CartButton />
                                 <div className={classes.label}>{totalQuantity}</div>
                             </IconButton>
-                            <ModalContainer show={this.state.show} handleClose={this.hideModal}/>
+                            <ModalContainer show={this.state.show} handleClose={this.hideModal} />
 
                         </div>
 
@@ -78,7 +91,6 @@ class Header extends PureComponent {
 
 
                 </div>
-
             </div>
         )
     }
@@ -89,13 +101,17 @@ const styled = Styled({
         maxWidth: "1238px",
         margin: "0 auto",
         marginBottom: 80,
-        position: "relative"
+        position: "sticky",
+        top: 0,
+        backgroundColor: "white",
+        zIndex: 10
     },
     list: {
         height: 80,
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
+        position: "relative"
 
     },
 
@@ -153,9 +169,9 @@ const styled = Styled({
         display: "block",
         margin: "0 auto"
     },
-    buttonsContainer:{
-        display:"flex",
-        gap:"20px"
+    buttonsContainer: {
+        display: "flex",
+        gap: "20px"
     }
 
 

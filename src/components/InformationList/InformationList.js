@@ -1,8 +1,8 @@
-import {Fragment, PureComponent} from "react";
+import { Fragment, PureComponent } from "react";
 import Typography from "../base/Typography";
 import IconButton from "../base/IconButton";
 import parse from "html-react-parser";
-import {injectStyled, Styled} from "styled-jss";
+import { injectStyled, Styled } from "styled-jss";
 import theme from "../../theme";
 import PropTypes from "prop-types";
 import ColorPicker from "../ColorPicker/ColorPicker";
@@ -13,33 +13,33 @@ class InformationList extends PureComponent {
         setAttributes: PropTypes.func
     }
     handleClick = (value, name) => () => {
-        this.props.setAttributes({value, name})
+        this.props.setAttributes({ value, name })
     };
     handleAddToCartClick = () => {
-        this.props.addToCart({attributes: this.props.attributes, product: this.props.selectedProduct})
+        this.props.addToCart({ attributes: this.props.attributes, product: this.props.selectedProduct })
     }
 
     render() {
-        const {classes, selectedProduct, attributes} = this.props
+        const { classes, selectedProduct, attributes } = this.props
         return (
             <div className={classes.informationBlock}>
-                <Typography className={classes.title} variant="h3">{selectedProduct.name}</Typography>
-                <Typography variant="h4">{selectedProduct.brand}</Typography>
+                <Typography className={classes.title} variant="h3">{selectedProduct.brand}</Typography>
+                <Typography variant="h4">{selectedProduct.name}</Typography>
                 <div>
                     {selectedProduct?.attributes?.map((attribute) => {
                         return (
                             <Fragment key={attribute.name}>
                                 <Typography variant="h4"
-                                            className={classes.attributesName}>{attribute.name}:</Typography>
+                                    className={classes.attributesName}>{attribute.name}:</Typography>
                                 <div className={classes.attributesItemsContainer}>
                                     {attribute.name === "Color" ? (
                                         <ColorPicker attribute={attribute} handleClick={this.handleClick}
-                                                     activeItem={attributes[attribute.name]}/>
+                                            activeItem={attributes[attribute.name]} />
                                     ) : (
 
                                         <AttributePicker attribute={attribute} handleClick={this.handleClick}
-                                                         attributes={attributes}
-                                                         activeItem={attributes[attribute.name]}/>
+                                            attributes={attributes}
+                                            activeItem={attributes[attribute.name]} />
                                     )}
 
                                 </div>
@@ -56,7 +56,7 @@ class InformationList extends PureComponent {
                 </div>
                 <div>
                     <IconButton className={classes.button}
-                                onClick={this.handleAddToCartClick}>ADD TO CART</IconButton>
+                        onClick={this.handleAddToCartClick}>ADD TO CART</IconButton>
                 </div>
                 <div className={classes.description}>{parse(selectedProduct.description)}</div>
             </div>
@@ -94,7 +94,8 @@ const styled = Styled({
     },
     attributesName: {
         fontWeight: 700,
-        marginTop: 24
+        marginTop: 24,
+        marginBottom: 8
     },
     attributesItemsContainer: {
         display: "flex",

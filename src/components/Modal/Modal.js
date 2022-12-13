@@ -1,15 +1,15 @@
-import {Component} from "react";
+import { Component } from "react";
 import IconButton from "../base/IconButton";
-import {injectStyled, Styled} from "styled-jss";
+import { injectStyled, Styled } from "styled-jss";
 import clsx from "clsx";
 import CartOverlayListContainer from "../CartOverlayList/CartOverlayListContainer";
 import theme from "../../theme";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Typography from "../base/Typography";
 
 class Modal extends Component {
     render() {
-        const {show, children, classes, totalQuantity, totalPrice} = this.props
+        const { show, children, classes, totalQuantity, totalPrice } = this.props
         return (
             <>
                 <div
@@ -19,7 +19,7 @@ class Modal extends Component {
                     {children}
                     <Typography className={classes.bag}>My Bag, <span
                         className={classes.quantity}>{totalQuantity} items</span></Typography>
-                    <CartOverlayListContainer/>
+                    <CartOverlayListContainer />
                     <div className={classes.totalPriceContainer}>
                         <Typography className={classes.total}>Total: </Typography>
                         <Typography className={classes.priceNumber}>{totalPrice}</Typography>
@@ -35,7 +35,7 @@ class Modal extends Component {
 
                 </div>
                 <div
-                    className={clsx(classes.modalBackDrop, [show ? classes.displayBlock : classes.displayNone])}>
+                    className={clsx(classes.modalBackDrop, [show ? classes.displayBlock : classes.displayNone])} onClick={this.props.handleClose}>
                 </div>
 
             </>
@@ -52,7 +52,7 @@ const styled = Styled({
         right: 74,
         width: 325,
         backgroundColor: "white",
-        zIndex: 30,
+        zIndex: 1000,
         paddingRight: 18,
         paddingLeft: 18,
         maxHeight: "calc(100vh - 100px)",
@@ -62,7 +62,7 @@ const styled = Styled({
     modalBackDrop: {
         position: "fixed",
         top: 78,
-        zIndex: 10,
+        zIndex: 900,
         left: 0,
         width: "100%",
         height: "100%",

@@ -1,7 +1,7 @@
-import {PureComponent} from "react";
+import { PureComponent } from "react";
 import PropTypes from "prop-types";
 import Typography from "../base/Typography";
-import {injectStyled, Styled} from "styled-jss";
+import { injectStyled, Styled } from "styled-jss";
 import Image from "../base/Image";
 import InformationList from "../InformationList/InformationList";
 
@@ -20,7 +20,7 @@ class ProductItem extends PureComponent {
     }
 
     handleActiveImageClick = (index) => () => {
-        this.props.setCurrentImageIndex({index})
+        this.props.setCurrentImageIndex({ index })
     }
 
     render() {
@@ -41,12 +41,12 @@ class ProductItem extends PureComponent {
                             {selectedProduct?.gallery?.map((image, index) => {
                                 return <Image
                                     className={classes.selectImage} src={image}
-                                    onClick={this.handleActiveImageClick(index)}/>
+                                    onClick={this.handleActiveImageClick(index)} />
                             })}
                         </div>
-                        <Image className={classes.image} src={selectedProduct.gallery[currentImageIndex]}/>
+                        <Image className={classes.image} src={selectedProduct.gallery[currentImageIndex]} />
                         <InformationList attributes={attributes} setAttributes={setAttributes}
-                                         selectedProduct={selectedProduct} addToCart={addToCart}/>
+                            selectedProduct={selectedProduct} addToCart={addToCart} />
                     </div>
                 </>
             )
@@ -76,8 +76,8 @@ const styled = Styled({
 
     },
     image: {
-        height: 510,
-        maxWidth: 610,
+        height: 511,
+        width: 610,
         objectFit: "cover",
         marginRight: 100
     }

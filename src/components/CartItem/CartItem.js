@@ -1,13 +1,13 @@
-import {PureComponent} from "react";
+import { PureComponent } from "react";
 import Typography from "../base/Typography";
 import ColorPicker from "../ColorPicker/ColorPicker";
 import AttributePicker from "../AttributePicker/AttributePicker";
-import {injectStyled, Styled} from "styled-jss";
+import { injectStyled, Styled } from "styled-jss";
 import Image from "../base/Image";
 import PropTypes from "prop-types";
 import IconButton from "../base/IconButton";
-import {ReactComponent as CaretLeft} from "../../assets/caretLeft.svg";
-import {ReactComponent as CaretRight} from "../../assets/caretRight.svg";
+import { ReactComponent as CaretLeft } from "../../assets/caretLeft.svg";
+import { ReactComponent as CaretRight } from "../../assets/caretRight.svg";
 import clsx from "clsx";
 
 class CartItem extends PureComponent {
@@ -18,12 +18,12 @@ class CartItem extends PureComponent {
     goToPrevious = () => {
         const isFirstImage = this.state.currentImageIndex === 0;
         const newIndex = isFirstImage ? this.props.cartItem.product.gallery.length - 1 : this.state.currentImageIndex - 1;
-        this.setState({currentImageIndex: newIndex})
+        this.setState({ currentImageIndex: newIndex })
     }
     goToNextImage = () => {
         const isLastImage = this.state.currentImageIndex === this.props.cartItem.product.gallery.length - 1;
         const newIndex = isLastImage ? 0 : this.state.currentImageIndex + 1;
-        this.setState({currentImageIndex: newIndex})
+        this.setState({ currentImageIndex: newIndex })
     }
     static propTypes = {
         incrementQuantity: PropTypes.func,
@@ -41,37 +41,37 @@ class CartItem extends PureComponent {
     }
 
     render() {
-        const {cartItem, classes, overlay} = this.props
+        const { cartItem, classes, overlay } = this.props
 
         return (
-            <div className={clsx(classes.container, {[classes.overlayContainer]: overlay})}>
-                <div className={clsx(classes.informationBlock, {[classes.overlayInformationBlock]: overlay})}>
+            <div className={clsx(classes.container, { [classes.overlayContainer]: overlay })}>
+                <div className={clsx(classes.informationBlock, { [classes.overlayInformationBlock]: overlay })}>
                     <Typography variant="h3" className={clsx(classes.title,
-                        {[classes.overlayTitle]: overlay})}>
+                        { [classes.overlayTitle]: overlay })}>
                         {cartItem.product.name}
                     </Typography>
                     <Typography variant="h4" className={clsx(classes.brand,
-                        {[classes.overlayBrand]: overlay})}>{cartItem.product.brand}</Typography>
+                        { [classes.overlayBrand]: overlay })}>{cartItem.product.brand}</Typography>
                     <Typography variant="price" className={clsx(classes.price,
-                        {[classes.overlayPrice]: overlay})}>
+                        { [classes.overlayPrice]: overlay })}>
                         {cartItem.product.currentPrice.currency.symbol}{cartItem.product.currentPrice.amount}
                     </Typography>
                     {cartItem.product.attributes.map((attribute) => {
                         return (
                             <div>
                                 <Typography variant="h4"
-                                            className={clsx(classes.attributesName, {[classes.overlayAttributesName]: overlay})}>{attribute.name}:</Typography>
+                                    className={clsx(classes.attributesName, { [classes.overlayAttributesName]: overlay })}>{attribute.name}:</Typography>
                                 <div className={classes.attributesValues}>
                                     {attribute.name === "Color" ? (
                                         <ColorPicker attribute={attribute}
-                                                     small={overlay}
-                                                     handleClick={this.handleClick()}
-                                                     activeItem={cartItem.attributes[attribute.name]}/>
+                                            small={overlay}
+                                            handleClick={this.handleClick()}
+                                            activeItem={cartItem.attributes[attribute.name]} />
                                     ) : (
 
                                         <AttributePicker attribute={attribute} handleClick={this.handleClick}
-                                                         small={overlay}
-                                                         activeItem={cartItem.attributes[attribute.name]}/>
+                                            small={overlay}
+                                            activeItem={cartItem.attributes[attribute.name]} />
                                     )}
 
                                 </div>
@@ -81,23 +81,23 @@ class CartItem extends PureComponent {
                         )
                     })}
                 </div>
-                <div className={clsx(classes.imageBlock, {[classes.overlayImageBlock]: overlay})}>
-                    <div className={clsx(classes.quantityContainer, {[classes.overlayQuantityContainer]: overlay})}>
-                        <div className={clsx(classes.quantityBlock, {[classes.overlayQuantityBlock]: overlay})}
-                             onClick={this.handleIncreaseQuantity(cartItem.product.id)}>+
+                <div className={clsx(classes.imageBlock, { [classes.overlayImageBlock]: overlay })}>
+                    <div className={clsx(classes.quantityContainer, { [classes.overlayQuantityContainer]: overlay })}>
+                        <div className={clsx(classes.quantityBlock, { [classes.overlayQuantityBlock]: overlay })}
+                            onClick={this.handleIncreaseQuantity(cartItem.product.id)}>+
                         </div>
                         <div
-                            className={clsx(classes.quantityValue, {[classes.overlayQuantityValue]: overlay})}>{cartItem.quantity}</div>
-                        <div className={clsx(classes.quantityBlock, {[classes.overlayQuantityBlock]: overlay})}
-                             onClick={this.handleDecreaseQuantity(cartItem.product.id)}>-
+                            className={clsx(classes.quantityValue, { [classes.overlayQuantityValue]: overlay })}>{cartItem.quantity}</div>
+                        <div className={clsx(classes.quantityBlock, { [classes.overlayQuantityBlock]: overlay })}
+                            onClick={this.handleDecreaseQuantity(cartItem.product.id)}>-
                         </div>
                     </div>
-                    <Image className={clsx(classes.img, {[classes.overlayImage]: overlay})}
-                           src={cartItem.product.gallery[this.state.currentImageIndex]}/>
+                    <Image className={clsx(classes.img, { [classes.overlayImage]: overlay })}
+                        src={cartItem.product.gallery[this.state.currentImageIndex]} />
                     <div className={classes.sliderButtonsContainer}>
-                        <IconButton className={classes.sliderButton} onClick={this.goToPrevious}><CaretLeft/>
+                        <IconButton className={classes.sliderButton} onClick={this.goToPrevious}><CaretLeft />
                         </IconButton>
-                        <IconButton className={classes.sliderButton} onClick={this.goToNextImage}> <CaretRight/>
+                        <IconButton className={classes.sliderButton} onClick={this.goToNextImage}> <CaretRight />
                         </IconButton>
                     </div>
                 </div>
@@ -180,7 +180,8 @@ const styled = Styled({
     },
     attributesName: {
         fontWeight: 700,
-        marginTop: 24
+        marginTop: 24,
+        marginBottom: 8
     },
     overlayAttributesName: {
         fontSize: 14,
