@@ -1,15 +1,15 @@
-import {PureComponent} from "react";
+import { PureComponent } from "react";
 import CartItemContainer from "../CartItem/CartItemContainer";
-import {injectStyled, Styled} from "styled-jss";
+import { injectStyled, Styled } from "styled-jss";
 
 class CartOverlayList extends PureComponent {
     render() {
-        const {cartItems} = this.props
+        const { cartItems } = this.props
         return (
             <>
 
                 {cartItems.map((cartItem) => {
-                    return <CartItemContainer cartItem={cartItem} overlay={true}/>
+                    return <CartItemContainer key={cartItem} cartItem={cartItem} overlay={true} />
                 })}
 
 

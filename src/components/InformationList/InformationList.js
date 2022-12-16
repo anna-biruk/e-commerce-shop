@@ -7,6 +7,8 @@ import theme from "../../theme";
 import PropTypes from "prop-types";
 import ColorPicker from "../ColorPicker/ColorPicker";
 import AttributePicker from "../AttributePicker/AttributePicker";
+import { isAllSelected } from "../../helpers/isAllSelected";
+import clsx from "clsx";
 
 class InformationList extends PureComponent {
     static propTypes = {
@@ -21,6 +23,7 @@ class InformationList extends PureComponent {
 
     render() {
         const { classes, selectedProduct, attributes } = this.props
+
         return (
             <div className={classes.informationBlock}>
                 <Typography className={classes.title} variant="h3">{selectedProduct.brand}</Typography>
@@ -55,7 +58,10 @@ class InformationList extends PureComponent {
 
                 </div>
                 <div>
-                    <IconButton className={classes.button}
+                    <IconButton className={clsx(classes.button,
+                        { [classes.disabledButton]: !isAllSelected(selectedProduct.attributes, attributes) },
+                    )}
+
                         onClick={this.handleAddToCartClick}>ADD TO CART</IconButton>
                 </div>
                 <div className={classes.description}>{parse(selectedProduct.description)}</div>
@@ -91,6 +97,20 @@ const styled = Styled({
         fontWeight: 600,
         marginTop: 20,
         cursor: "pointer",
+    },
+    disabledButton: {
+        width: 292,
+        border: "none",
+        backgroundColor: '#c7c4c4',
+        color: "white",
+        padding: 16,
+        fontSize: 16,
+        fontFamily: "Raleway",
+        fontWeight: 600,
+        marginTop: 20,
+        cursor: "not-allowed",
+        pointerEvents: "none",
+
     },
     attributesName: {
         fontWeight: 700,

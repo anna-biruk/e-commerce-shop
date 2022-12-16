@@ -50,6 +50,9 @@ class Header extends PureComponent {
         this.props.fetchCategories()
         this.props.fetchCurrencies()
     }
+    componentWillUnmount() {
+        document.body.style.overflowY = "auto"
+    }
 
     handleClick = (category) => () => {
         this.props.setActiveCategory(category.name)
@@ -63,10 +66,10 @@ class Header extends PureComponent {
                 <div className={classes.list}>
                     <div>
                         {categories.map((category) => {
-                            return <IconButton onClick={this.handleClick(category)}
+                            return <Link to="/" key={category.name}><IconButton onClick={this.handleClick(category)}
                                 className={clsx(classes.button, { [classes.active]: activeCategory === category.name })}>
                                 {category.name.toUpperCase()}
-                            </IconButton>
+                            </IconButton></Link>
                         })}
                     </div>
                     <Link to="/">
@@ -91,7 +94,7 @@ class Header extends PureComponent {
 
 
                 </div>
-            </div>
+            </div >
         )
     }
 }

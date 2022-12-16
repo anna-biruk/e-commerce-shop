@@ -1,18 +1,19 @@
-import {PureComponent} from "react";
+import { PureComponent } from "react";
 import clsx from "clsx";
 import Typography from "../base/Typography";
-import {injectStyled, Styled} from "styled-jss";
+import { injectStyled, Styled } from "styled-jss";
 
 class AttributePicker extends PureComponent {
     render() {
-        const {attribute, classes, activeItem, handleClick, small} = this.props
+        const { attribute, classes, activeItem, handleClick, small } = this.props
         return (
             attribute.items.map((item) => {
                 return (
                     <div
+                        key={item.value}
                         className={clsx(classes.attributeItem,
-                            {[classes.activeButton]: item.value === activeItem},
-                            {[classes.smallAttribute]: small})}
+                            { [classes.activeButton]: item.value === activeItem },
+                            { [classes.smallAttribute]: small })}
                         onClick={handleClick(item.value, attribute.name)}>
                         <Typography variant="h4">{item.value}</Typography>
                     </div>

@@ -1,19 +1,29 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { isDeepEqual } from '../../helpers/isDeepEqual'
 
 const initialState = {
-    items: []
+    items: [],
 }
 const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
         addToCart: (state, action) => {
-            const {product, attributes} = action.payload;
-            const itemInCart = state.items.find((item) => item.product.id === product.id);
+            const { product, attributes } = action.payload;
+
+            const itemInCart = state.items.find((item) => item.product.id === product.id && isDeepEqual(item.attributes, attributes));
             if (itemInCart) {
                 itemInCart.quantity++;
             } else {
-                state.items.push({product, attributes, quantity: 1});
+                if (Object.keys(attributes).length === 0) {
+                    const defaultAttributes = {}
+                    product.attributes.forEach(a => {
+                        defaultAttributes[a.name] = a.items[0].value
+                    })
+                    state.items.push({ product, attributes: defaultAttributes, quantity: 1 });
+                } else {
+                    state.items.push({ product, attributes, quantity: 1 });
+                }
             }
         },
         incrementQuantity: (state, action) => {
@@ -59,5 +69,5 @@ export const selectTax = state => {
     return `${state.currencies.currentCurrencySymbol}${tax.toFixed(2)}`
 }
 
-export const {addToCart, incrementQuantity, decrementQuantity} = cartSlice.actions
+export const { addToCart, incrementQuantity, decrementQuantity } = cartSlice.actions
 export default cartSlice.reducer

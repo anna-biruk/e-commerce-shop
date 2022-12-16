@@ -1,13 +1,13 @@
-import {PureComponent} from "react";
+import { PureComponent } from "react";
 import Typography from "../base/Typography";
 import PropTypes from "prop-types";
 import Card from "../base/Card";
 import Image from "../base/Image";
-import {injectStyled, Styled} from "styled-jss";
+import { injectStyled, Styled } from "styled-jss";
 import IconButton from "../base/IconButton";
-import {ReactComponent as CartSvg} from "../../assets/cart.svg";
+import { ReactComponent as CartSvg } from "../../assets/cart.svg";
 import theme from "../../theme";
-import {withRouter} from "../../hocs/withRouter";
+import { withRouter } from "../../hocs/withRouter";
 
 
 class ProductListItem extends PureComponent {
@@ -31,28 +31,30 @@ class ProductListItem extends PureComponent {
 
     handleAddToCartClick = (event) => {
         event.stopPropagation()
-        this.props.addToCart({attributes: this.props.attributes, product: this.props.productItem})
+        this.props.addToCart({ attributes: this.props.attributes, product: this.props.productItem })
+
     }
+
     handleCardClick = () => {
         this.props.router.navigate(`/${this.props.productItem.id}`)
     }
 
     render() {
-        const {productItem, classes} = this.props
+        const { productItem, classes } = this.props
         return (
 
             <Card className={classes.card} variant="productCard" onClick={this.handleCardClick}>
                 {
                     !productItem.inStock && (<div className={classes.overlay}>OUT OF STOCK</div>)
                 }
-                <Image className={classes.img} src={productItem.gallery[0]}/>
+                <Image className={classes.img} src={productItem.gallery[0]} />
                 <Typography variant="h4" className={classes.title}>{productItem.name}</Typography>
                 <Typography className={classes.price}
-                            variant="h4">{productItem.currentPrice.currency.symbol}{productItem.currentPrice.amount}</Typography>
+                    variant="h4">{productItem.currentPrice.currency.symbol}{productItem.currentPrice.amount}</Typography>
                 {
                     productItem.inStock && (
                         <IconButton onClick={this.handleAddToCartClick} className={classes.button}>
-                            <CartSvg/>
+                            <CartSvg />
                         </IconButton>
                     )
                 }

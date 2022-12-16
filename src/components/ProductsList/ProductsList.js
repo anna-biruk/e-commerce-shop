@@ -1,8 +1,8 @@
-import {PureComponent} from "react";
+import { PureComponent } from "react";
 import PropTypes from "prop-types";
 import ProductListItem from "../ProductListItem/ProductListItem";
 import Typography from "../base/Typography";
-import {injectStyled, Styled} from "styled-jss";
+import { injectStyled, Styled } from "styled-jss";
 
 
 class ProductsList extends PureComponent {
@@ -21,21 +21,21 @@ class ProductsList extends PureComponent {
     }
 
     render() {
-        const {products, classes, addToCart, selectedProduct, attributes} = this.props
+        const { products, classes, addToCart, selectedProduct, attributes } = this.props
         return (
             <div className={classes.container}>
                 {
                     products.map((category) => {
                         return (
-                            <div>
+                            <div key={category.name}>
                                 <Typography variant="h2">
                                     {category.name}
                                 </Typography>
                                 <div className={classes.productList}>
                                     {category.products.map((productItem) => {
-                                        return <ProductListItem productItem={productItem} addToCart={addToCart}
-                                                                selectedProduct={selectedProduct}
-                                                                attributes={attributes}/>
+                                        return <ProductListItem key={productItem.id} productItem={productItem} addToCart={addToCart}
+                                            selectedProduct={selectedProduct}
+                                            attributes={attributes} />
                                     })}
                                 </div>
                             </div>)

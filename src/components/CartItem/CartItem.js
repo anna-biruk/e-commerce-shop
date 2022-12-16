@@ -58,7 +58,7 @@ class CartItem extends PureComponent {
                     </Typography>
                     {cartItem.product.attributes.map((attribute) => {
                         return (
-                            <div>
+                            <div key={attribute.id}>
                                 <Typography variant="h4"
                                     className={clsx(classes.attributesName, { [classes.overlayAttributesName]: overlay })}>{attribute.name}:</Typography>
                                 <div className={classes.attributesValues}>

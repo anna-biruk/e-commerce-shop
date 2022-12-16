@@ -1,4 +1,4 @@
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import ProductsList from "./ProductsList";
 import {
     fetchData,
@@ -6,7 +6,7 @@ import {
     selectProductById,
     selectProducts
 } from "../../features/products/productsSlice";
-import {addToCart} from "../../features/cart/cartSlice";
+import { addToCart } from "../../features/cart/cartSlice";
 
 
 const mapStateToProps = (state) => {
